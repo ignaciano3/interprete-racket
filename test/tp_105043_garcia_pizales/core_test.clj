@@ -76,9 +76,10 @@
     (is (= (generar-mensaje-error :wrong-type-arg '>= 'A) (fnc-mayor-o-igual (list 1 2 'A 4)))))
 
   (testing "Fnc Read"
-    (is (= '(hola mundo) (with-in-str "(hola\nmundo)" (fnc-read)))))
-  ;Los otros tests no los entendí, ya que fnc read solo tiene un parámetro
-  
+    (is (= '(hola mundo) (with-in-str "(hola\nmundo)" (fnc-read))))
+    (is (= (generar-mensaje-error :io-ports-not-implemented 'read) (fnc-read '(1))))
+    (is (= (generar-mensaje-error :wrong-number-args-prim-proc 'read) (fnc-read '(1 2))))
+    (is (= (generar-mensaje-error :wrong-number-args-prim-proc 'read) (fnc-read '(1 2 3)))))
   )
   
 
@@ -158,16 +159,10 @@
   (testing "Proteger bool en str"
     (is (= "(or %f %t)" (proteger-bool-en-str "(or #f #t)")))
     (is (= "(and (or %f %t) %t)" (proteger-bool-en-str "(and (or #f #t) #t)")))
-    (is (= "" (proteger-bool-en-str ""))))
+    (is (= "" (proteger-bool-en-str "")))) 
   
-  ; user=> (restaurar-bool (read-string (proteger-bool-en-str "(and (or #F #f #t #T) #T)")))
-; (and (or #F #f #t #T) #T)
-; user=> (restaurar-bool (read-string "(and (or %F %f %t %T) %T)") )
-; (and (or #F #f #t #T) #T)
-  
-  ;; (testing "Restaurar bool"
-  ;;   (is (= "(and (or #F #f #t #T) #T)" (restaurar-bool (read-string (proteger-bool-en-str "(and (or #F #f #t #T) #T)")))))
-  ;;   (is (= "(and (or #F #f #t #T) #T)" (restaurar-bool (read-string "(and (or %F %f %t %T) %T)")))))
-  ;; Se me complica probarlas así pero en el repl funcionan bien
+  (testing "Restaurar bool"
+    (is (= (list 'and (list 'or (symbol "#F") (symbol "#f") (symbol "#t") (symbol "#T")) (symbol "#T")) (restaurar-bool (read-string (proteger-bool-en-str "(and (or #F #f #t #T) #T)")))))
+    (is (= (list 'and (list 'or (symbol "#F") (symbol "#f") (symbol "#t") (symbol "#T")) (symbol "#T")) (restaurar-bool (read-string "(and (or %F %f %t %T) %T)")))))
   
   )

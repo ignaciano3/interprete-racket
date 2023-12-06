@@ -670,10 +670,11 @@
 (defn proteger-bool-en-str
   "Cambia, en una cadena, #t por %t y #f por %f, para poder aplicarle read-string."
   [cadena]
-  (clojure.string/replace
-   (clojure.string/replace
-    cadena "#t" "%t")
-   "#f" "%f"))
+  (clojure.string/replace 
+   (clojure.string/replace 
+    (clojure.string/replace 
+     (clojure.string/replace 
+      cadena "#t" "%t") "#f" "%f") "#T" "%T") "#F" "%F"))
 
 
 ; user=> (restaurar-bool (read-string (proteger-bool-en-str "(and (or #F #f #t #T) #T)")))
@@ -688,9 +689,11 @@
      (cond
        (= item (symbol "%t")) (symbol "#t")
        (= item (symbol "%f")) (symbol "#f")
+       (= item (symbol "%F")) (symbol "#F")
+       (= item (symbol "%T")) (symbol "#T")
        :else item))
    codigo))
-
+  
 ; user=> (fnc-append '( (1 2) (3) (4 5) (6 7)))
 ; (1 2 3 4 5 6 7)
 ; user=> (fnc-append '( (1 2) 3 (4 5) (6 7)))
@@ -750,10 +753,13 @@
 ; (;ERROR: Wrong number of args given #<primitive-procedure read>)
 (defn fnc-read
   "Devuelve la lectura de un elemento de Racket desde la terminal/consola."
-  [] (read-string (leer-entrada)))
+  ([] (read-string (leer-entrada)))
+  ([lae]
+   (cond 
+     (> (count lae) 1) (generar-mensaje-error :wrong-number-args-prim-proc 'read)
+     (= (count lae) 1) (generar-mensaje-error :io-ports-not-implemented 'read)
+      :else (read-string (leer-entrada)))))
 
-(with-in-str "(hola\nmundo)" (fnc-read))
-'(hola mundo)
 ; user=> (fnc-sumar ())
 ; 0
 ; user=> (fnc-sumar '(3))
