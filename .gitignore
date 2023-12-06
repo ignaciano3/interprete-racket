@@ -12,6 +12,7 @@ pom.xml.asc
 .hg/
 /.calva
 /.clj-kondo
+/.lsp
 demo.rkt
 jarras.rkt
 res.txt
