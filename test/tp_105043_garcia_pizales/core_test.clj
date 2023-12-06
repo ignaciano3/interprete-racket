@@ -168,5 +168,6 @@
   ;; (testing "Restaurar bool"
   ;;   (is (= "(and (or #F #f #t #T) #T)" (restaurar-bool (read-string (proteger-bool-en-str "(and (or #F #f #t #T) #T)")))))
   ;;   (is (= "(and (or #F #f #t #T) #T)" (restaurar-bool (read-string "(and (or %F %f %t %T) %T)")))))
+  ;; Se me complica probarlas así pero en el repl funcionan bien
   
   )
