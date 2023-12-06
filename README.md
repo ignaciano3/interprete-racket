@@ -6,11 +6,6 @@ Resolución del tp de parte de Ignacio Garcia Pizales. Legajo 105043
 
     $ java -jar tp-105043-garcia-pizales-0.1.0-standalone.jar [args]
 
-
-### Any Other Sections
-### That You Think
-### Might be Useful
-
 ## License
 
 Copyright © 2023 FIXME
