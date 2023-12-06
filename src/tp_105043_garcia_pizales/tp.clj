@@ -941,10 +941,11 @@
   "Evalua una expresion `define`. Devuelve una lista con el resultado y un ambiente actualizado con la definicion." 
   [expre, amb]
   (cond
+    (< (count expre ) 3) (list (generar-mensaje-error :missing-or-extra 'define expre) amb)
     (and (not= (count expre) 3) (symbol? (second expre))) (list (generar-mensaje-error :missing-or-extra 'define expre) amb)
     (symbol? (second expre)) (list (symbol "#<void>") (actualizar-amb amb (second expre) (first (evaluar (last expre) amb))))
     (number? (second expre)) (list (generar-mensaje-error :bad-variable 'define expre) amb) 
-    (empty? (second expre)) (list (generar-mensaje-error :missing-or-extra 'define expre) amb)
+    (empty? (second expre)) (list (generar-mensaje-error :bad-variable 'define expre) amb)
     :else (evaluar-define-lambda (first expre) (first (second expre)) (rest (second expre)) (nthnext expre 2) amb)))
 
 
