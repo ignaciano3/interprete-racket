@@ -81,7 +81,6 @@
     (is (= (generar-mensaje-error :wrong-number-args-prim-proc 'read) (fnc-read '(1 2))))
     (is (= (generar-mensaje-error :wrong-number-args-prim-proc 'read) (fnc-read '(1 2 3)))))
   )
-  
 
 (deftest evaluaciones
   

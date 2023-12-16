@@ -47,6 +47,7 @@
 (declare fnc-newline)
 (declare fnc-reverse)
 (declare fnc-mayor-o-igual)
+(declare fnc-max)
 
 ; Funciones auxiliares
 
@@ -79,7 +80,7 @@
   ([]
    (println "Interprete de Racket en Clojure")
    (println "Trabajo Practico de 75.14/95.48 - Lenguajes Formales 2023") (prn) (flush)
-   (repl (list 'append 'append 'car 'car 'cdr 'cdr 'cond 'cond 'cons 'cons 'define 'define
+   (repl (list 'max 'max 'append 'append 'car 'car 'cdr 'cdr 'cond 'cond 'cons 'cons 'define 'define
                'display 'display 'enter! 'enter! 'env 'env 'equal? 'equal? 'eval 'eval 'exit 'exit
                'if 'if 'lambda 'lambda 'length 'length 'list 'list 'list? 'list?
                'newline 'newline 'nil (symbol "#f") 'not 'not 'null? 'null? 'or 'or 'quote 'quote
@@ -211,6 +212,7 @@
     (= fnc 'null?)        (fnc-null? lae)
     (= fnc 'reverse)      (fnc-reverse lae)
     (= fnc 'read)         (fnc-read)
+    (= fnc 'max)          (fnc-max lae)
     :else (generar-mensaje-error :wrong-type-apply fnc)))
 
 ; --------------------------------------------------------------------------
@@ -792,6 +794,18 @@
       (apply + lista)
       (generar-mensaje-error :wrong-type-arg '+ non-number))))
 
+
+(defn fnc-max
+  [lista]
+  (cond
+    (empty? lista) (generar-mensaje-error :wrong-number-args 'max)
+    :else (let [non-number (check-non-number lista)]
+      (if (nil? non-number)
+        (apply max lista)
+        (generar-mensaje-error :wrong-type-arg 'max non-number)
+        ))))
+
+(fnc-max '(1 2 1 2 3 6 7 8 1 2))
 ; user=> (fnc-restar ())
 ; (;ERROR: -: Wrong number of args given)
 ; user=> (fnc-restar '(3))
@@ -917,7 +931,6 @@
     (= escalar (symbol "#f")) (list (symbol "#f") amb)
     (symbol? escalar) (list (buscar escalar amb) amb)
     :else (list escalar amb)))
-
 
 ; user=> (evaluar-define '(define x 2) '(x 1))
 ; (#<void> (x 2))
