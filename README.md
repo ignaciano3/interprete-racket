@@ -1,7 +1,5 @@
 # Interprete de Racket en Clojure
 
-Resolución del tp de parte de Ignacio Garcia Pizales. Legajo 105043
-
 ## Usage
 
     $ java -jar tp-105043-garcia-pizales-0.1.0-standalone.jar [args]
