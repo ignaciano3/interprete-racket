@@ -1,4 +1,4 @@
-# tp-105043-garcia-pizales
+# Interprete de Racket en Clojure
 
 Resolución del tp de parte de Ignacio Garcia Pizales. Legajo 105043
 
